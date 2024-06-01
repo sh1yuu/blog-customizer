@@ -18,6 +18,7 @@ import {
 import { RadioGroup } from '../radio-group';
 import { Separator } from '../separator';
 import styles from './ArticleParamsForm.module.scss';
+import { useOutsideClickClose } from '../select/hooks/useOutsideClickClose';
 
 type ArticleStateProps = {
 	setValue: Dispatch<SetStateAction<ArticleStateType>>;
@@ -41,12 +42,16 @@ export const ArticleParamsForm = ({ setValue }: ArticleStateProps) => {
 		};
 	};
 
+	useOutsideClickClose({
+		isOpen: open,
+		rootRef: asideRef,
+		onChange: setOpen,
+	});
+
 	return (
-		<>
+		<div ref={asideRef}>
 			<ArrowButton onClick={arrowButtonHandler} open={open} />
-			<aside
-				ref={asideRef}
-				className={clsx(styles.container, open && styles.container_open)}>
+			<aside className={clsx(styles.container, open && styles.container_open)}>
 				<form className={styles.form}>
 					<Text uppercase as='h2' align='left' weight={800} size={31}>
 						Задайте параметры
@@ -89,6 +94,6 @@ export const ArticleParamsForm = ({ setValue }: ArticleStateProps) => {
 					</div>
 				</form>
 			</aside>
-		</>
+		</div>
 	);
 };
