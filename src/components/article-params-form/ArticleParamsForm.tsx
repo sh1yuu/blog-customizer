@@ -25,12 +25,12 @@ type ArticleStateProps = {
 };
 
 export const ArticleParamsForm = ({ setValue }: ArticleStateProps) => {
-	const [open, setOpen] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [select, setSelect] = useState<ArticleStateType>(defaultArticleState);
 	const asideRef = useRef<HTMLDivElement>(null);
 
 	const arrowButtonHandler = () => {
-		setOpen(!open);
+		setIsMenuOpen(!isMenuOpen);
 	};
 
 	const handleOnChange = (option: keyof ArticleStateType) => {
@@ -43,9 +43,9 @@ export const ArticleParamsForm = ({ setValue }: ArticleStateProps) => {
 	};
 
 	useOutsideClickClose({
-		isOpen: open,
+		isOpen: isMenuOpen,
 		rootRef: asideRef,
-		onChange: setOpen,
+		onChange: setIsMenuOpen,
 	});
 
 	const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -60,8 +60,9 @@ export const ArticleParamsForm = ({ setValue }: ArticleStateProps) => {
 
 	return (
 		<div ref={asideRef}>
-			<ArrowButton onClick={arrowButtonHandler} open={open} />
-			<aside className={clsx(styles.container, open && styles.container_open)}>
+			<ArrowButton onClick={arrowButtonHandler} open={isMenuOpen} />
+			<aside
+				className={clsx(styles.container, isMenuOpen && styles.container_open)}>
 				<form className={styles.form} onSubmit={handleFormSubmit}>
 					<Text uppercase as='h2' align='left' weight={800} size={31}>
 						Задайте параметры
