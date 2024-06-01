@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { ArrowButton } from 'components/arrow-button';
 import { Button } from 'components/button';
-import { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { Dispatch, FormEvent, SetStateAction, useRef, useState } from 'react';
 import { Select } from '../select';
 import { Text } from '../text';
 
@@ -48,11 +48,16 @@ export const ArticleParamsForm = ({ setValue }: ArticleStateProps) => {
 		onChange: setOpen,
 	});
 
+	const handleButtonSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		setValue(select);
+	};
+
 	return (
 		<div ref={asideRef}>
 			<ArrowButton onClick={arrowButtonHandler} open={open} />
 			<aside className={clsx(styles.container, open && styles.container_open)}>
-				<form className={styles.form}>
+				<form className={styles.form} onSubmit={handleButtonSubmit}>
 					<Text uppercase as='h2' align='left' weight={800} size={31}>
 						Задайте параметры
 					</Text>
